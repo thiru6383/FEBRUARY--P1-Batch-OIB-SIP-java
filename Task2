@@ -1,0 +1,61 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class ATM {
+    double balance = 10000;
+    ArrayList<String> history = new ArrayList<>();
+
+    void checkBalance() {
+        System.out.println("Balance: ₹" + balance);
+    }
+
+    void deposit(double amt) {
+        balance += amt;
+        history.add("Deposited ₹" + amt);
+    }
+
+    void withdraw(double amt) {
+        if (amt <= balance) {
+            balance -= amt;
+            history.add("Withdrawn ₹" + amt);
+        } else {
+            System.out.println("Insufficient Balance");
+        }
+    }
+
+    void history() {
+        if (history.isEmpty())
+            System.out.println("No Transactions");
+        else
+            history.forEach(System.out::println);
+    }
+}
+
+public class ATMInterface {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ATM atm = new ATM();
+
+        System.out.print("User ID: ");
+        int uid = sc.nextInt();
+        System.out.print("PIN: ");
+        int pin = sc.nextInt();
+
+        if (uid == 1234 && pin == 1111) {
+            while (true) {
+                System.out.println("\n1.Balance\n2.Deposit\n3.Withdraw\n4.History\n5.Exit");
+                int ch = sc.nextInt();
+
+                switch (ch) {
+                    case 1: atm.checkBalance(); break;
+                    case 2: atm.deposit(sc.nextDouble()); break;
+                    case 3: atm.withdraw(sc.nextDouble()); break;
+                    case 4: atm.history(); break;
+                    case 5: return;
+                }
+            }
+        } else {
+            System.out.println("Invalid Login");
+        }
+    }
+}
