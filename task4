@@ -1,0 +1,39 @@
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class OnlineExamination {
+    static int score = 0;
+    static boolean timeout = false;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        if (!sc.next().equals("admin") || !sc.next().equals("1234")) {
+            System.out.println("Login Failed");
+            return;
+        }
+
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                timeout = true;
+                System.out.println("\nTime Up");
+            }
+        }, 30000);
+
+        String[] q = {
+            "Java is?\na)OS b)Language",
+            "JVM?\na)Machine b)Method"
+        };
+        char[] a = {'b', 'a'};
+
+        for (int i = 0; i < q.length && !timeout; i++) {
+            System.out.println(q[i]);
+            if (sc.next().charAt(0) == a[i]) score++;
+        }
+
+        t.cancel();
+        System.out.println("Score: " + score);
+    }
+}
