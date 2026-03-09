@@ -1,0 +1,43 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+class Reservation {
+    HashMap<Integer, String> data = new HashMap<>();
+    int pnr = 1001;
+
+    void book(String name, String train) {
+        data.put(pnr, name + " - " + train);
+        System.out.println("Booked. PNR: " + pnr++);
+    }
+
+    void cancel(int p) {
+        if (data.remove(p) != null)
+            System.out.println("Cancelled");
+        else
+            System.out.println("PNR not found");
+    }
+
+    void view(int p) {
+        System.out.println(data.getOrDefault(p, "No Record"));
+    }
+}
+
+public class OnlineReservationSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Reservation r = new Reservation();
+
+        if (sc.next().equals("admin") && sc.next().equals("1234")) {
+            while (true) {
+                System.out.println("1.Book 2.Cancel 3.View 4.Exit");
+                int ch = sc.nextInt();
+                if (ch == 1) r.book(sc.next(), sc.next());
+                else if (ch == 2) r.cancel(sc.nextInt());
+                else if (ch == 3) r.view(sc.nextInt());
+                else break;
+            }
+        } else {
+            System.out.println("Login Failed");
+        }
+    }
+}
