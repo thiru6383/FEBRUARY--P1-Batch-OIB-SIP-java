@@ -1,0 +1,46 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+class Library {
+    HashMap<Integer, String> books = new HashMap<>();
+
+    void add(int id, String name) {
+        books.put(id, name);
+        System.out.println("Book Added");
+    }
+
+    void view() {
+        books.forEach((k,v) -> System.out.println(k + " : " + v));
+    }
+
+    void issue(int id) {
+        if (books.remove(id) != null)
+            System.out.println("Book Issued");
+        else
+            System.out.println("Not Available");
+    }
+}
+
+public class DigitalLibrary {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Library lib = new Library();
+
+        String role = sc.next();
+        if (role.equals("admin") && sc.next().equals("admin123")) {
+            while (true) {
+                int ch = sc.nextInt();
+                if (ch == 1) lib.add(sc.nextInt(), sc.next());
+                else if (ch == 2) lib.view();
+                else break;
+            }
+        } else {
+            while (true) {
+                int ch = sc.nextInt();
+                if (ch == 1) lib.view();
+                else if (ch == 2) lib.issue(sc.nextInt());
+                else break;
+            }
+        }
+    }
+}
